@@ -8,7 +8,7 @@ ContextAI Assistant is a modern, responsive web application that provides a smar
 • Semantic Search
 • LLM Inference
 
-Live Site : [LIVE](
+Live Site : [LIVE](https://context-ai-assistant.vercel.app/)
 
 ## Project Structure
 
