@@ -2,7 +2,13 @@
 
 ContextAI Assistant is a modern, responsive web application that provides a smart chat interface to interact with AI models using the Groq API. It also utilizes Hugging Face for document embeddings and sentence similarity. The app features an optimized user interface built for a seamless chatting experience, complete with intelligent scrolling, dynamic layout management, and an organized component architecture.
 
-**AI Concepts Covered**: Retrieval-Augmented Generation (RAG) • Vector Embeddings • Semantic Search • LLM Inference
+**AI Concepts Covered**: 
+• Retrieval-Augmented Generation (RAG)
+• Vector Embeddings
+• Semantic Search
+• LLM Inference
+
+Live Site : [LIVE](
 
 ## Project Structure
 
