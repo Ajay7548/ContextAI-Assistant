@@ -7,19 +7,19 @@ export async function getAIResponse(context, question) {
     const response = await axios.post(
       "https://api.groq.com/openai/v1/chat/completions",
       {
-        model: "llama-3.1-8b-instant",
+        model: "llama-3.1-8b-instant", // Why used this model only  ?
         messages: [
           {
             role: "user",
             content: `
-Answer ONLY from the context below.
-If not found, say "I don't know".
+                      Answer ONLY from the context below.
+                      If not found, say "I don't know".
 
-Context:
-${context}
+                      Context:
+                      ${context}
 
-Question:
-${question}
+                      Question:
+                      ${question}
             `,
           },
         ],

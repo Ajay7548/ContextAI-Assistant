@@ -18,6 +18,6 @@ export async function getSimilarityScores(question, docs) {
       },
     }
   );
-
+console.log(response.data);
   return response.data; // array of floats e.g. [0.85, 0.32, ...]
 }
