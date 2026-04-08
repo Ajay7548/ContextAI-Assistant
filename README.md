@@ -91,10 +91,3 @@ npm run dev
 ```
 Vite will launch the development server, usually available at `http://localhost:5173`. Open this URL in your browser to view the application.
 
-## Key Features & AI Concepts Used
-
-- **Retrieval-Augmented Generation (RAG)**: The assistant uses a RAG architecture to answer questions accurately by fetching relevant context from its knowledge base before generating a response with the LLM.
-- **Vector Embeddings & Semantic Search**: Utilizes the Hugging Face Inference API (Sentence Transformers) to convert documents and user queries into vector embeddings. This allows the system to find the most contextually relevant documents via similarity scoring.
-- **High-Speed AI Inference**: Leverages the Groq API and the `llama-3.1-8b-instant` model to provide extremely fast, context-aware chat completions based on the retrieved documents.
-- **Optimized Frontend Architecture**: Modularized React components to eliminate prop drilling and provide a highly maintainable code structure.
-- **Intelligent Chat Interface**: Features auto-scrolling to keep the latest messages in view, as well as automatic input focusing after receiving an AI response for a seamless user experience.
