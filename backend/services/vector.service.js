@@ -1,17 +1,39 @@
 import { docs } from "../data/docs.js";
-import { getSimilarityScores } from "./embedding.service.js";
+import { getEmbedding } from "./embedding.service.js";
 
+// Stored in memory — computed once at startup
+let docVectors = [];
+
+// Call this ONCE when your server starts
 export async function initVectors() {
-  // No pre-computation needed — similarity is computed at query time
-  console.log("✅ Vector service ready");
+  console.log("⏳ Embedding docs...");
+  docVectors = await Promise.all(docs.map((d) => getEmbedding(d)));
+  console.log(`✅ ${docVectors.length} docs embedded and stored in memory`);
 }
 
 export async function findRelevantDocsVector(question) {
-  // Get similarity scores between the question and all docs in one API call
-  const scores = await getSimilarityScores(question, docs);
+  if (docVectors.length === 0) {
+    throw new Error("Vectors not initialised — call initVectors() on startup");
+  }
 
-  const scored = docs.map((text, i) => ({ text, score: scores[i] }));
+  // Only 1 API call now (just the question)
+  const qVec = await getEmbedding(question);
+
+  const scored = docs.map((text, i) => ({
+    text,
+    score: cosineSim(qVec, docVectors[i]),
+  }));
+
   scored.sort((a, b) => b.score - a.score);
 
-  return scored.slice(0, 2).map(d => d.text).join("\n");
-}
+  // Return top 2 most relevant docs
+  return scored.slice(0, 2).map((d) => d.text).join("\n");
+}
+
+// Local math — no API call, instant
+function cosineSim(a, b) {
+  const dot = a.reduce((sum, v, i) => sum + v * b[i], 0);
+  const magA = Math.sqrt(a.reduce((s, v) => s + v * v, 0));
+  const magB = Math.sqrt(b.reduce((s, v) => s + v * v, 0));
+  return dot / (magA * magB);
+}

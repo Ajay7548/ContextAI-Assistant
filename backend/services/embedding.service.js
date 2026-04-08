@@ -1,16 +1,10 @@
 import axios from "axios";
 
-// Uses HuggingFace Sentence Similarity API
-// Returns an array of similarity scores (one per doc)
-export async function getSimilarityScores(question, docs) {
+// Get the actual vector (384 numbers) for any text
+export async function getEmbedding(text) {
   const response = await axios.post(
-    "https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2",
-    {
-      inputs: {
-        source_sentence: question,
-        sentences: docs,
-      },
-    },
+"https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction",
+    { inputs: text },
     {
       headers: {
         Authorization: `Bearer ${process.env.HF_API_KEY}`,
@@ -18,6 +12,7 @@ export async function getSimilarityScores(question, docs) {
       },
     }
   );
-console.log(response.data);
-  return response.data; // array of floats e.g. [0.85, 0.32, ...]
+  // HF returns [[...vector...]] — we want the inner array
+  const result = response.data;
+  return Array.isArray(result[0]) ? result[0] : result;
 }
